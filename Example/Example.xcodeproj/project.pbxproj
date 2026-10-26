@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D9252ABF306F46630020A580 /* swift6-module-template in Frameworks */ = {isa = PBXBuildFile; productRef = D9252ABE306F46630020A580 /* swift6-module-template */; };
+		D9E2943D308F062C00F06C43 /* WhiteRook in Frameworks */ = {isa = PBXBuildFile; productRef = D9E2943C308F062C00F06C43 /* WhiteRook */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +26,7 @@
 		000000000000000130000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				D9252ABF306F46630020A580 /* swift6-module-template in Frameworks */,
+				D9E2943D308F062C00F06C43 /* WhiteRook in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -66,7 +66,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				D9252ABE306F46630020A580 /* swift6-module-template */,
+				D9E2943C308F062C00F06C43 /* WhiteRook */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* Example.app */;
@@ -97,7 +97,7 @@
 			mainGroup = 000000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D9252ABD306F46630020A580 /* XCLocalSwiftPackageReference "../../swift6-module-template" */,
+				D9E2943B308F062C00F06C43 /* XCLocalSwiftPackageReference "../../WhiteRook" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -182,11 +182,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.6.2;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROJECT_UNIQUE_VALUE = UG94LLS4;
+				PROJECT_UNIQUE_VALUE = LWHO3RRE;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -246,10 +246,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 26.6.2;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PROJECT_UNIQUE_VALUE = UG94LLS4;
+				PROJECT_UNIQUE_VALUE = LWHO3RRE;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				TVOS_DEPLOYMENT_TARGET = 27.0;
@@ -354,16 +354,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		D9252ABD306F46630020A580 /* XCLocalSwiftPackageReference "../../swift6-module-template" */ = {
+		D9E2943B308F062C00F06C43 /* XCLocalSwiftPackageReference "../../WhiteRook" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../swift6-module-template";
+			relativePath = ../../WhiteRook;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D9252ABE306F46630020A580 /* swift6-module-template */ = {
+		D9E2943C308F062C00F06C43 /* WhiteRook */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = "swift6-module-template";
+			productName = WhiteRook;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

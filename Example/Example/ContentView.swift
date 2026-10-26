@@ -6,22 +6,13 @@
 //
 
 import SwiftUI
-import swift6_module_template
+import WhiteRook
 
 struct ContentView: View {
   var body: some View {
     VStack(alignment: .center, spacing: 20) {
-      Text(swift6_module_template.whitePawn())
+      Text(WhiteRook.whiteRook())
         .font(.system(size: 120))
-
-      Text(swift6_module_template.greet("SwiftUI"))
-        .font(.title2)
-        .multilineTextAlignment(.center)
-        .padding()
-
-      Text("Module: \(swift6_module_template.name)")
-        .font(.caption)
-        .foregroundColor(.secondary)
     }
     .padding()
   }
