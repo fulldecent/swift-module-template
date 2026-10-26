@@ -1,5 +1,12 @@
 # Changelog
 
+## [16.7.0](https://github.com/fulldecent/swift6-module-template/compare/v16.6.0...v16.7.0) (2026-10-26)
+
+
+### Features
+
+* support Xcode version 27.1 (27A9275) ([fc4aa0b](https://github.com/fulldecent/swift6-module-template/commit/fc4aa0b0008ba24ad65d6aea0a0511e05c8bb121))
+
 ## [16.6.0](https://github.com/fulldecent/swift6-module-template/compare/v16.5.0...v16.6.0) (2026-10-09)
 
 
