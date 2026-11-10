@@ -51,6 +51,9 @@ jobs:
         uses: swift-actions/setup-swift@v3
         with:
           swift-version: ${{ steps.tools.outputs.version }}
+          # v3 exits when gpg reports an untrusted good signature.
+          # https://github.com/swift-actions/setup-swift/issues/798
+          skip-verify-signature: true
 
       - name: Build
         run: |
