@@ -10,7 +10,7 @@ let package = Package(
         .library(
             name: "WhiteRook",
             targets: ["WhiteRook"]
-        ),
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -18,14 +18,14 @@ let package = Package(
         .target(
             name: "WhiteRook",
             swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
+                .enableUpcomingFeature("ApproachableConcurrency")
             ],
         ),
         .testTarget(
             name: "WhiteRookTests",
             dependencies: ["WhiteRook"],
             swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
+                .enableUpcomingFeature("ApproachableConcurrency")
             ],
         ),
     ]

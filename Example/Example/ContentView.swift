@@ -9,15 +9,15 @@ import SwiftUI
 import WhiteRook
 
 struct ContentView: View {
-  var body: some View {
-    VStack(alignment: .center, spacing: 20) {
-      Text(WhiteRook.whiteRook())
-        .font(.system(size: 120))
+    var body: some View {
+        VStack(alignment: .center, spacing: 20) {
+            Text(WhiteRook.whiteRook())
+                .font(.system(size: 120))
+        }
+        .padding()
     }
-    .padding()
-  }
 }
 
 #Preview {
-  ContentView()
+    ContentView()
 }

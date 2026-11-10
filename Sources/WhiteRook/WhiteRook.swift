@@ -8,9 +8,9 @@
 
 /// A simple Swift module that gets a specific chess piece text representation
 public struct WhiteRook {
-  /// Get the white rook character
-  /// - Returns: The white rook Unicode character
-  public static func whiteRook() -> String {
-    return "♖"
-  }
+    /// Get the white rook character
+    /// - Returns: The white rook Unicode character
+    public static func whiteRook() -> String {
+        return "♖"
+    }
 }

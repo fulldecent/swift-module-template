@@ -1,3 +1,6 @@
 *.md
 /.build/
 /dist/
+
+# Xcode asset catalogs are not prose
+*.xcassets
