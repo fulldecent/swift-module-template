@@ -24,7 +24,8 @@ on:
 jobs:
   build-test:
     name: Build and test
-    runs-on: ubuntu-latest
+    # ubuntu-latest is 26.04. swiftly 1.1 reports "Unsupported Linux platform" there.
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       id-token: write
