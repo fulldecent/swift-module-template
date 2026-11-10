@@ -45,7 +45,7 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Import the Swift signing key
-        run: curl -fsSL https://swift.org/keys/all-keys.asc | gpg --import
+        run: curl --compressed -fsSL https://swift.org/keys/automatic-signing-key-4.asc | gpg --import -
 
       - name: Set up Swift
         uses: swift-actions/setup-swift@v3
