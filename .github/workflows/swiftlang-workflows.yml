@@ -28,7 +28,7 @@ jobs:
       enable_wasm_sdk_build: false
       enable_embedded_wasm_sdk_build: true
       # The Swift target name. xxPROJECTxNAMExx is the project name, not this target.
-      swift_flags: --target "swift6_module_template"
+      swift_flags: --target "WhiteRook"
 
   soundness:
     name: Soundness

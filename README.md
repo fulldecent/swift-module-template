@@ -95,23 +95,7 @@ The [release workflow](.github/workflows/release.yml) uses [Release Please](http
 >
 > A repository created from this template should set [`.release-please-manifest.json`](.release-please-manifest.json) to `0.0.0`. This repository's manifest is `16.5.0`, the same version as tag [v16.5.0](https://github.com/fulldecent/swift6-module-template/releases/tag/v16.5.0). Release Please needs a SemVer version to bump.
 >
-> Run these commands from a clone of the new repository. `gh` fills in `{owner}/{repo}` from that clone.
->
-> List tags:
->
-> ```sh
-> gh api repos/{owner}/{repo}/tags --jq '.[].name'
-> ```
->
-> Set the starting tag on the current `main` commit. `v0.0.0` is the version Release Please counts forward from. Use another `vMAJOR.MINOR.PATCH` tag when this repository should start later.
->
-> ```sh
-> gh api --method POST repos/{owner}/{repo}/git/refs \
->   -f ref="refs/tags/v0.0.0" \
->   -f sha="$(gh api repos/{owner}/{repo}/commits/main --jq .sha)"
-> ```
->
-> `gh release list` and `gh release create` publish the releases this workflow creates after that tag.
+> If you are adopting this template from an existing project and your first Release Please pull request is not getting the version number right, check the Release Please documentation. You may need to add a configuration option if you do not use a "v" prefix in your release tag names, and for other situations.
 
 ## Maintenance and dependency updates
 
@@ -133,5 +117,5 @@ Do this every quarter or so and please send a PR here if you see updates availab
 1. We use an MIT license for this template. You should carefully consider which license to apply to your own project.
 1. Swift ignore rules are inlined from [Swift.gitignore](https://github.com/github/gitignore/blob/main/Swift.gitignore). The macOS and secret rules above them come from [project-template](https://github.com/fulldecent/project-template).
 1. This project is built based on [best practices documented in Swift 6 Module Template](https://github.com/fulldecent/swift6-module-template).
-1. This project is built based on [best practices documented in project-template](https://github.com/fulldecent/project-template), release v1.3.0.
-1. Releases follow the [project-template release workflow](https://github.com/fulldecent/project-template/blob/v1.3.0/.github/workflows/release.yml), release v1.3.0. The published file is the Linux static library from `swift build -c release`. project-template publishes `README.md` there, and [rust-template](https://github.com/fulldecent/rust-template) publishes its command-line binary.
+1. This project is built based on [best practices documented in project-template](https://github.com/fulldecent/project-template), release v1.4.1.
+1. Releases follow the [project-template release workflow](https://github.com/fulldecent/project-template/blob/v1.4.1/.github/workflows/release.yml), release v1.4.1. The published file is the Linux static library from `swift build -c release`. project-template publishes `README.md` there, and [rust-template](https://github.com/fulldecent/rust-template) publishes its command-line binary.

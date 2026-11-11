@@ -2,109 +2,121 @@
 import Foundation
 
 func promptForVariable(variable: String, defaultValue: String) -> String {
-  if variable == "__PROJECT_NAME__", CommandLine.arguments.count == 2 {
-    return CommandLine.arguments[1]
-  }
-  print("Please enter a value for \(variable) (default: \"\(defaultValue)\")")
-  if let answer = readLine(), !answer.isEmpty {
-    return answer
-  }
-  return defaultValue
+    if variable == "__PROJECT_NAME__", CommandLine.arguments.count == 2 {
+        return CommandLine.arguments[1]
+    }
+    print("Please enter a value for \(variable) (default: \"\(defaultValue)\")")
+    if let answer = readLine(), !answer.isEmpty {
+        return answer
+    }
+    return defaultValue
 }
 
 func replaceVariablesInFiles(substitutions: [(from: String, to: String)]) {
-  let fileManager = FileManager.default
-  let enumerator = fileManager.enumerator(atPath: ".")
+    let fileManager = FileManager.default
+    let enumerator = fileManager.enumerator(atPath: ".")
 
-  while let fileName = enumerator?.nextObject() as? String {
-    var isDirectory: ObjCBool = false
-    if fileManager.fileExists(atPath: fileName, isDirectory: &isDirectory), !isDirectory.boolValue {
-      do {
-        var text = try String(contentsOfFile: fileName, encoding: .utf8)
-        for substitution in substitutions {
-          text = text.replacingOccurrences(of: substitution.from, with: substitution.to)
+    while let fileName = enumerator?.nextObject() as? String {
+        var isDirectory: ObjCBool = false
+        if fileManager.fileExists(atPath: fileName, isDirectory: &isDirectory),
+            !isDirectory.boolValue
+        {
+            do {
+                var text = try String(contentsOfFile: fileName, encoding: .utf8)
+                for substitution in substitutions {
+                    text = text.replacingOccurrences(of: substitution.from, with: substitution.to)
+                }
+                try text.write(toFile: fileName, atomically: true, encoding: .utf8)
+            } catch {
+                // Skip this file if it isn’t valid UTF-8
+            }
         }
-        try text.write(toFile: fileName, atomically: true, encoding: .utf8)
-      } catch {
-        // Skip this file if it isn’t valid UTF-8
-      }
     }
-  }
 }
 
 func replaceVariablesInFileNames(substitutions: [(from: String, to: String)]) {
-  let fileManager = FileManager.default
-  let contents = try! fileManager.contentsOfDirectory(atPath: ".")
+    let fileManager = FileManager.default
+    let contents = try! fileManager.contentsOfDirectory(atPath: ".")
 
-  for fileName in contents {
-    if fileName == "." || fileName == ".." {
-      continue
+    for fileName in contents {
+        if fileName == "." || fileName == ".." {
+            continue
+        }
+        var newFileName = fileName
+        for substitution in substitutions {
+            newFileName = newFileName.replacingOccurrences(
+                of: substitution.from,
+                with: substitution.to
+            )
+        }
+        if newFileName != fileName {
+            try! fileManager.moveItem(atPath: fileName, toPath: newFileName)
+        }
+        var isDirectory: ObjCBool = false
+        if fileManager.fileExists(atPath: newFileName, isDirectory: &isDirectory),
+            isDirectory.boolValue
+        {
+            fileManager.changeCurrentDirectoryPath(newFileName)
+            replaceVariablesInFileNames(substitutions: substitutions)
+            fileManager.changeCurrentDirectoryPath("..")
+        }
     }
-    var newFileName = fileName
-    for substitution in substitutions {
-      newFileName = newFileName.replacingOccurrences(of: substitution.from, with: substitution.to)
-    }
-    if newFileName != fileName {
-      try! fileManager.moveItem(atPath: fileName, toPath: newFileName)
-    }
-    var isDirectory: ObjCBool = false
-    if fileManager.fileExists(atPath: newFileName, isDirectory: &isDirectory), isDirectory.boolValue
-    {
-      fileManager.changeCurrentDirectoryPath(newFileName)
-      replaceVariablesInFileNames(substitutions: substitutions)
-      fileManager.changeCurrentDirectoryPath("..")
-    }
-  }
 }
 
 struct Env {
-  static let envVariablePrefix = "SMT"
+    static let envVariablePrefix = "SMT"
 
-  static func fetchSMT(
-    templateVarName: String, defaultValue: String, prompt: (String, String) -> String
-  ) -> String {
-    let environmentVarName = nameFor(templateVarName: templateVarName)
-    if let value = ProcessInfo.processInfo.environment[environmentVarName] {
-      return value
+    static func fetchSMT(
+        templateVarName: String,
+        defaultValue: String,
+        prompt: (String, String) -> String
+    ) -> String {
+        let environmentVarName = nameFor(templateVarName: templateVarName)
+        if let value = ProcessInfo.processInfo.environment[environmentVarName] {
+            return value
+        }
+        return prompt(templateVarName, defaultValue)
     }
-    return prompt(templateVarName, defaultValue)
-  }
 
-  static func nameFor(templateVarName: String) -> String {
-    return "\(envVariablePrefix)_\(sanitize(templateVarName: templateVarName))"
-  }
+    static func nameFor(templateVarName: String) -> String {
+        return "\(envVariablePrefix)_\(sanitize(templateVarName: templateVarName))"
+    }
 
-  private static func sanitize(templateVarName: String) -> String {
-    return
-      templateVarName
-      .uppercased()
-      .replacingOccurrences(of: "\\W", with: "_", options: .regularExpression)
-      .trimmingCharacters(in: CharacterSet(charactersIn: "_"))
-  }
+    private static func sanitize(templateVarName: String) -> String {
+        return
+            templateVarName
+            .uppercased()
+            .replacingOccurrences(of: "\\W", with: "_", options: .regularExpression)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "_"))
+    }
 }
 
 let yearFormatter = DateFormatter()
 yearFormatter.dateFormat = "yyyy"
 
 var substitutionPairs: [(from: String, to: String)] = [
-  (from: "xxPROJECTxNAMExx", to: "MyProject"),
-  (from: "__ORGANIZATION_NAME__", to: "Awesome Org"),
-  (from: "com.AN.ORGANIZATION.IDENTIFIER", to: "com.awesome"),
-  (from: "__AUTHOR_NAME__", to: "Mr McAwesome"),
-  (
-    from: "__TODAYS_DATE__",
-    to: DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
-  ),
-  (from: "__TODAYS_YEAR__", to: yearFormatter.string(from: Date())),
-  (from: "__GITHUB_USERNAME__", to: "awesome_octocat"),
+    (from: "xxPROJECTxNAMExx", to: "MyProject"),
+    (from: "__ORGANIZATION_NAME__", to: "Awesome Org"),
+    (from: "com.AN.ORGANIZATION.IDENTIFIER", to: "com.awesome"),
+    (from: "__AUTHOR_NAME__", to: "Mr McAwesome"),
+    (
+        from: "__TODAYS_DATE__",
+        to: DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
+    ),
+    (from: "__TODAYS_YEAR__", to: yearFormatter.string(from: Date())),
+    (from: "__GITHUB_USERNAME__", to: "awesome_octocat"),
 ]
 
 // Update the values through environment variables or prompts
 substitutionPairs = substitutionPairs.map { pair in
-  (
-    from: pair.from,
-    to: Env.fetchSMT(templateVarName: pair.from, defaultValue: pair.to, prompt: promptForVariable)
-  )
+    (
+        from: pair.from,
+        to: Env.fetchSMT(
+            templateVarName: pair.from,
+            defaultValue: pair.to,
+            prompt: promptForVariable
+        )
+    )
 }
 
 let fileManager = FileManager.default
@@ -115,20 +127,26 @@ let sourceRoot = fileManager.currentDirectoryPath
 let skipNames: Set<String> = [".", "..", ".git", ".build", "OUTPUT"]
 let destinationRoot = "OUTPUT/xxPROJECTxNAMExx"
 try! fileManager.createDirectory(
-  atPath: "OUTPUT", withIntermediateDirectories: true, attributes: nil)
+    atPath: "OUTPUT",
+    withIntermediateDirectories: true,
+    attributes: nil
+)
 if fileManager.fileExists(atPath: destinationRoot) {
-  try! fileManager.removeItem(atPath: destinationRoot)
+    try! fileManager.removeItem(atPath: destinationRoot)
 }
 try! fileManager.createDirectory(
-  atPath: destinationRoot, withIntermediateDirectories: true, attributes: nil)
+    atPath: destinationRoot,
+    withIntermediateDirectories: true,
+    attributes: nil
+)
 for name in try! fileManager.contentsOfDirectory(atPath: sourceRoot) {
-  if skipNames.contains(name) {
-    continue
-  }
-  try! fileManager.copyItem(
-    atPath: sourceRoot + "/" + name,
-    toPath: destinationRoot + "/" + name
-  )
+    if skipNames.contains(name) {
+        continue
+    }
+    try! fileManager.copyItem(
+        atPath: sourceRoot + "/" + name,
+        toPath: destinationRoot + "/" + name
+    )
 }
 
 // Move into OUTPUT and do variable replacement

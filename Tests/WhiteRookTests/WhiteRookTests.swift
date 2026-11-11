@@ -1,4 +1,5 @@
 import Testing
+
 @testable import WhiteRook
 
 @Test func testWhiteRook() async throws {

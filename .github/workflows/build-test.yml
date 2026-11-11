@@ -24,7 +24,8 @@ on:
 jobs:
   build-test:
     name: Build and test
-    runs-on: ubuntu-latest
+    # ubuntu-latest is 26.04. swiftly 1.1 reports "Unsupported Linux platform" there.
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       id-token: write
@@ -44,10 +45,16 @@ jobs:
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
+      - name: Import the Swift signing key
+        run: curl --compressed -fsSL https://swift.org/keys/automatic-signing-key-4.asc | gpg --import -
+
       - name: Set up Swift
         uses: swift-actions/setup-swift@v3
         with:
           swift-version: ${{ steps.tools.outputs.version }}
+          # v3 exits when gpg reports an untrusted good signature.
+          # https://github.com/swift-actions/setup-swift/issues/798
+          skip-verify-signature: true
 
       - name: Build
         run: |
